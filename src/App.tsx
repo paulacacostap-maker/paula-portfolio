@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 
 import ProductionConsole from "./ProductionConsole";
@@ -6,10 +6,34 @@ import ActiFlow from "./ActiFlow";
 
 import productionImage from "./assets/Manage Assets.png";
 import actiflowImage from "./assets/Execution Workspace Ideas 4.png";
+import SplineHero from "./components/SplineHero";
+
+function useDemoVisibility() {
+  const stageRef = useRef<HTMLDivElement | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const element = stageRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.25 },
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  return { stageRef, isVisible };
+}
 
 function App() {
   const [showProduction, setShowProduction] = useState(false);
   const [showActiFlow, setShowActiFlow] = useState(false);
+
+  const productionDemo = useDemoVisibility();
+  const actiflowDemo = useDemoVisibility();
 
   if (showProduction) {
     return <ProductionConsole onBack={() => setShowProduction(false)} />;
@@ -34,22 +58,9 @@ function App() {
       </nav>
 
       <header className="hero">
-        <p className="eyebrow">INDEPENDENT PRODUCT DESIGNER · COLOMBIA</p>
-
-        <h1>
-          Designing digital
-          <br />
-          products with
-          <br />
-          <span>purpose & clarity.</span>
-        </h1>
+        <SplineHero />
 
         <div className="hero-bottom">
-          <p>
-            I'm Paula, a Product Designer focused on turning complex problems
-            into thoughtful digital experiences.
-          </p>
-
           <a href="#work" className="work-link">
             Explore selected work ↓
           </a>
@@ -67,7 +78,7 @@ function App() {
           <div>
             <p className="eyebrow">A SELECTION OF MY WORK</p>
             <h2>
-              Selected work <span>(03)</span>
+              Selected work <span>(02)</span>
             </h2>
           </div>
 
@@ -97,15 +108,32 @@ function App() {
               <span>OMNICOM</span>
             </div>
 
-            <div className="laptop-stage">
-              <div className="laptop">
-                <div className="laptop-screen">
+            <div
+              className={`laptop-stage assets-demo-stage ${
+                productionDemo.isVisible ? "demo-is-visible" : ""
+              }`}
+              ref={productionDemo.stageRef}
+            >
+              <div className="laptop assets-demo-laptop">
+                <div className="laptop-screen assets-demo-screen">
                   <div className="laptop-camera"></div>
-                  <img
-                    src={productionImage}
-                    alt="Production Console asset management interface"
+
+                  <div className="assets-demo-image">
+                    <img
+                      src={productionImage}
+                      alt="Production Console asset management interface"
+                    />
+                  </div>
+
+                  <div
+                    className="assets-demo-expanded"
+                    style={{
+                      backgroundImage: `url("${productionImage}")`,
+                    }}
+                    aria-hidden="true"
                   />
                 </div>
+
                 <div className="laptop-base">
                   <div className="laptop-notch"></div>
                 </div>
@@ -154,7 +182,12 @@ function App() {
               <span>ACTIFLOW</span>
             </div>
 
-            <div className="laptop-stage">
+            <div
+              className={`laptop-stage ${
+                actiflowDemo.isVisible ? "demo-is-visible" : ""
+              }`}
+              ref={actiflowDemo.stageRef}
+            >
               <div className="laptop">
                 <div className="laptop-screen">
                   <div className="laptop-camera"></div>
@@ -163,6 +196,7 @@ function App() {
                     alt="ActiFlow workflow execution interface"
                   />
                 </div>
+
                 <div className="laptop-base">
                   <div className="laptop-notch"></div>
                 </div>

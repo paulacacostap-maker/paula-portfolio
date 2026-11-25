@@ -10,6 +10,8 @@ import contentImage from "./assets/Content Center.png";
 import reviewImage from "./assets/3 Placing a pin.png";
 import ideationImage from "./assets/Ideation.png";
 import interviewsImage from "./assets/Interviews.png";
+import designSystem1 from "./assets/design system_1.png";
+import designSystem2 from "./assets/design system_2.png";
 
 type Props = {
   onBack: () => void;
@@ -465,6 +467,62 @@ export default function ProductionConsole({ onBack }: Props) {
               <h3>Context</h3>
               <p>Keep project, asset and review information connected.</p>
             </article>
+          </div>
+        </div>
+      </section>
+
+      {/* DESIGN SYSTEM */}
+
+      <section className="pc-section">
+        <div className="pc-section-index">
+          <span>06</span>
+          <small>DESIGN SYSTEM & COMPONENT LIBRARY</small>
+        </div>
+
+        <div className="pc-section-content">
+          <p className="pc-kicker">SPLASH DESIGN SYSTEM</p>
+
+          <h2>
+            Building consistency through a<em> shared design language.</em>
+          </h2>
+
+          <p className="pc-lead">
+            Splash was the design system used across Production Console. The
+            design team worked with its existing foundations and component
+            library, extending and adapting components to support the evolving
+            needs of the product.
+          </p>
+
+          <div>
+            <DiscoveryImage
+              src={designSystem1}
+              alt="Splash Design System component library"
+              label="Splash Design System"
+              description="Shared styles and reusable components."
+              onClick={() => setZoom(designSystem1)}
+            />
+          </div>
+
+          <p className="pc-kicker" style={{ marginTop: "48px" }}>
+            COMPONENT DESIGN & SYSTEM EVOLUTION
+          </p>
+
+          <p className="pc-lead">
+            As part of the Production Console design team, I collaborated on the
+            design and evolution of key UI components, including Asset Cards,
+            Project Cards, Side Navigation, and Side Panels. Together, we
+            explored component variations, interaction states, behaviors, and
+            documentation to support consistency across the product.
+          </p>
+
+          <div>
+            <DiscoveryImage
+              src={designSystem2}
+              alt="Production Console component documentation"
+              label="Production Console Components"
+              description="Component variations, states and documentation created collaboratively by the design team."
+              onClick={() => setZoom(designSystem2)}
+            />
           </div>
         </div>
       </section>
